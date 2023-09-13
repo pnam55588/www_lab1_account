@@ -1,4 +1,6 @@
-<%@ page import="fit.iuh.models.Account" %><%--
+<%@ page import="fit.iuh.models.Account" %>
+<%@ page import="fit.iuh.models.Role" %>
+<%@ page import="fit.iuh.models.Log" %><%--
   Created by IntelliJ IDEA.
   User: phgss
   Date: 9/13/2023
@@ -8,11 +10,12 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>Profile</title>
 </head>
 <body>
 <%
     Account account = (Account) session.getAttribute("account");
+    Role role = (Role) session.getAttribute("role");
 %>
 <h1>Profile</h1>
 <table>
@@ -28,6 +31,14 @@
         <td>phone:</td>
         <td><%=account.getPhone()%></td>
     </tr>
+    <tr>
+        <td>role:</td>
+        <td><%=role.getName()%></td>
+    </tr>
+    <br>
 </table>
+    <form action="ControlServlet" method="POST">
+        <input type="submit" name="action" value="logout">
+    </form>
 </body>
 </html>

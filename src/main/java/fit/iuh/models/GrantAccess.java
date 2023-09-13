@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 public class GrantAccess implements Serializable {
-//    (account_id, role_id, is_grant, note
+//    GrantAccess
     private  String accountId;
     private String roleId;
     private boolean isGrant;

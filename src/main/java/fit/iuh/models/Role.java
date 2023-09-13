@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 public class Role implements Serializable {
-//    role_id, role_name, description, status
+    // role
     private String id;
     private String name;
     private String description;

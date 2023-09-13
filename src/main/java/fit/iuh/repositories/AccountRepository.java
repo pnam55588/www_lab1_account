@@ -71,4 +71,39 @@ public class AccountRepository {
         }
         return false;
     }
+    public boolean update(Account account){
+        String updateQuery = "UPDATE accounts SET full_name = ?, password = ?, email = ?, phone = ?, status = ? WHERE account_id = ?";
+
+        try (
+                PreparedStatement updateStatement = connection.prepareStatement(updateQuery)
+        ) {
+            updateStatement.setString(1, account.getFullName());
+            updateStatement.setString(2, account.getPassword());
+            updateStatement.setString(3, account.getEmail());
+            updateStatement.setString(4, account.getPhone());
+            updateStatement.setInt(5, account.getStatus());
+            updateStatement.setString(6, account.getId());
+
+            int rowsAffected = updateStatement.executeUpdate();
+
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+    public boolean delete(String id) {
+        String deleteQuery = "DELETE FROM accounts WHERE account_id = ?";
+
+        try (
+                PreparedStatement deleteStatement = connection.prepareStatement(deleteQuery)
+        ) {
+            deleteStatement.setString(1, id);
+            int rowsAffected = deleteStatement.executeUpdate();
+            return rowsAffected > 0;
+        } catch (SQLException | NumberFormatException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }
