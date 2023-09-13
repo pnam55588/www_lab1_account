@@ -5,6 +5,44 @@
     <title>Title</title>
 </head>
 <body>
+    <%
 
+    %>
+    <table>
+        <tr>
+            <td>full name</td>
+            <td id="name"></td>
+        </tr>
+        <tr>
+            <td>email</td>
+            <td id="email"></td>
+        </tr>
+        <tr>
+            <td>phone</td>
+            <td id="phone"></td>
+        </tr>
+    </table>
+
+<script>
+    function getQueryParameters() {
+        var queryParameters = {};
+        var queryString = window.location.search.substring(1);
+        var parameterPairs = queryString.split('&');
+        for (var i = 0; i < parameterPairs.length; i++) {
+            var pair = parameterPairs[i].split('=');
+            var key = decodeURIComponent(pair[0]);
+            var value = decodeURIComponent(pair[1]);
+            queryParameters[key] = value;
+        }
+        return queryParameters;
+    }
+    let queryParams = getQueryParameters();
+    document.getElementById('name').textContent = queryParams.name || 'N/A'
+    document.getElementById('email').textContent = queryParams.email || 'N/A'
+    document.getElementById('phone').innerText = queryParams.phone || 'N/A'
+
+
+
+</script>
 </body>
 </html>

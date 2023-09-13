@@ -1,13 +1,16 @@
 package fit.iuh.models;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Account {
+public class Account implements Serializable {
 //    account_id, full_name, password, email,
 //phone, status)
     private String id;
     private String fullName;
     private String password;
+    private String email;
+    private String phone;
     private int status;
 
     public String getId() {
@@ -42,10 +45,28 @@ public class Account {
         this.status = status;
     }
 
-    public Account(String id, String fullName, String password, int status) {
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public Account(String id, String fullName, String password, String email, String phone, int status) {
         this.id = id;
         this.fullName = fullName;
         this.password = password;
+        this.email = email;
+        this.phone = phone;
         this.status = status;
     }
 
@@ -75,6 +96,8 @@ public class Account {
                 "id='" + id + '\'' +
                 ", fullName='" + fullName + '\'' +
                 ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", phone='" + phone + '\'' +
                 ", status=" + status +
                 '}';
     }
