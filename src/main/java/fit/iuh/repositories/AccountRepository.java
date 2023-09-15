@@ -36,6 +36,25 @@ public class AccountRepository {
         }
         return accounts;
     }
+    public Account findById(String id){
+        Account account = new Account();
+        String sql = "SELECT * FROM account WHERE account_id = '"+id+"' and status = 1 LIMIT 1";
+        try (PreparedStatement statement = connection.prepareStatement(sql)){
+            ResultSet resultSet =  statement.executeQuery();
+            while(resultSet.next()){
+                account.setId(resultSet.getString(1));
+                account.setFullName(resultSet.getString(2));
+                account.setPassword(resultSet.getString(3));
+                account.setEmail(resultSet.getString(4));
+                account.setPhone(resultSet.getString(5));
+                account.setStatus(resultSet.getInt(6));
+            }
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return account;
+    }
     public Account findByEmail(String email){
         Account account = new Account();
         String sql = "SELECT * FROM account WHERE email = '"+email+"' and status = 1 LIMIT 1";

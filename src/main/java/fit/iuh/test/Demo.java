@@ -2,6 +2,7 @@ package fit.iuh.test;
 
 import fit.iuh.db.JdbcConnection;
 import fit.iuh.models.Account;
+import fit.iuh.models.GrantAccess;
 import fit.iuh.models.Log;
 import fit.iuh.models.Role;
 import fit.iuh.repositories.AccountRepository;
@@ -15,12 +16,9 @@ public class Demo {
     public static void main(String[] args) {
         LogRepository logRepository = new LogRepository();
         GrantAccessRepository grantAccessRepository = new GrantAccessRepository();
-        logRepository.updateLogoutTime("met",LocalDateTime.now());
-
         AccountRepository accountRepository = new AccountRepository();
-        List<Account> accounts = accountRepository.getAll();
-        accounts.forEach(account -> {
-            System.out.println(account);
-        });
+        logRepository.updateLogoutTime("met",LocalDateTime.now());
+//        accountRepository.insert(new Account("t1","t1","t1","t1","t1",1));
+        grantAccessRepository.insert(new GrantAccess("t1", "user", true, ""));
     }
 }
