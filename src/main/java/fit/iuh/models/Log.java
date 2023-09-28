@@ -1,12 +1,11 @@
 package fit.iuh.models;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-public class Log {
-//    account đăng nhập, ngày giờ
-//    đăng nhập, ngày giờ đăng xuất, ghi chú
-
+public class Log implements Serializable {
+    // log
     private int id;
     private String accountId;
     private LocalDateTime loginTime;

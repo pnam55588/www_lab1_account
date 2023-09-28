@@ -1,9 +1,10 @@
 package fit.iuh.models;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Role {
-//    role_id, role_name, description, status
+public class Role implements Serializable {
+    // role
     private String id;
     private String name;
     private String description;

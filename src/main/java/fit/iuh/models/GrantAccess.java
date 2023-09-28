@@ -1,9 +1,10 @@
 package fit.iuh.models;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class GrantAccess {
-//    (account_id, role_id, is_grant, note
+public class GrantAccess implements Serializable {
+//    GrantAccess
     private  String accountId;
     private String roleId;
     private boolean isGrant;
