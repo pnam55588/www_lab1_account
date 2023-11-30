@@ -4,11 +4,80 @@
 <html>
 <head>
     <title>Account Dashboard</title>
+    <style>
+        form {
+            width: 300px;
+            margin: 20px auto;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+
+        select {
+            margin-bottom: 15px;
+        }
+
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: #fff;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        a {
+            display: inline-block;
+            padding: 6px 12px;
+            text-decoration: none;
+            background-color: #4CAF50;
+            color: #fff;
+            border-radius: 4px;
+        }
+
+        a:hover {
+            background-color: #45a049;
+        }
+
+    </style>
 </head>
 <body>
 <h1>Account Dashboard</h1>
 
-<form method="POST">
+<form method="POST" action="ControlServlet">
     <label >Full Name:</label>
     <input type="text" name="fullName" required><br>
     <label >Password:</label>
@@ -40,7 +109,7 @@
     <c:forEach var="account" items="${accounts}">
         <tr>
             <td>${account.getId()}</td>
-            <td><${account.getFullName()}</td>
+            <td>${account.getFullName()}</td>
             <td>${account.getPassword()}</td>
             <td>${account.getEmail()}</td>
             <td>${account.getPhone()}</td>

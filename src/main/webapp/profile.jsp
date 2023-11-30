@@ -11,6 +11,36 @@
 <html>
 <head>
     <title>Profile</title>
+    <STYLE>
+        table {
+            width: 300px;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: #fff;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+    </STYLE>
 </head>
 <body>
 <%
@@ -33,7 +63,7 @@
     </tr>
     <tr>
         <td>role:</td>
-        <td><%=role.getName()%></td>
+        <td><%= (role != null) ? role.getName() : "No Role" %></td>
     </tr>
     <br>
 </table>

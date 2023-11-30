@@ -41,13 +41,21 @@ public class ControlServlet extends HttpServlet {
                 case "login":
                     handleLogin(req,resp);
                     break;
-                case "test":
+                case "delete":
+                    handleDeleteAccount(req, resp);
+                    break;
+                case "edit":
+
+                    handleEditAccount(req,resp);
 
                     break;
                 default:
             }
         }
     }
+
+
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String action = req.getParameter("action");
@@ -57,20 +65,37 @@ public class ControlServlet extends HttpServlet {
                     handleLogout(req,resp);
                     break;
                 case "Create Account":
-                    handleCreateAccount(req);
+                    handleCreateAccount(req,resp);
                     break;
-                case "edit":
+                case "Save Account":
+                    handleSaveAccount(req,resp);
+                    break;
 
-                    break;
-                case "delete":
-                    handleDeleteAccount(req);
-
-                    break;
                 default:
                     // Handle other actions if needed
             }
         }
     }
+
+    private void handleSaveAccount(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String id = req.getParameter("id");
+        String fullName = req.getParameter("fullName");
+        String password = req.getParameter("password");
+        String email = req.getParameter("email");
+        String phone = req.getParameter("phone");
+        String role = req.getParameter("role");
+        Account account = new Account(email,fullName,password,email,phone,1);
+        account.setId(id);
+        GrantAccess grantAccess = new GrantAccess(account.getId(),role,true,"");
+
+        accountRepository.update(account);
+        grantAccessRepository.update(grantAccess);
+
+        List<Account> accounts = accountRepository.getAll();
+        req.setAttribute("accounts", accounts);
+        req.getRequestDispatcher("dashboard.jsp").forward(req,resp);
+    }
+
     private void handleLogin(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         String email = req.getParameter("email");
         String password = req.getParameter("password");
@@ -85,14 +110,15 @@ public class ControlServlet extends HttpServlet {
             session.setAttribute("role", role);
             session.setAttribute("account", account);
 
-            if(role.getName().equalsIgnoreCase("administrator")){
+            if(role == null || role.getName().equalsIgnoreCase("user")){
+                resp.sendRedirect("profile.jsp");
+            }else if(role.getName().equalsIgnoreCase("administrator")){
                 List<Account> accounts = accountRepository.getAll();
                 req.setAttribute("accounts", accounts);
                 req.getRequestDispatcher("dashboard.jsp").forward(req,resp);
 //                            resp.sendRedirect("dashboard.jsp");
-            }else if(role.getName().equalsIgnoreCase("user") || role == null){
-                resp.sendRedirect("profile.jsp");
             }
+
         }
         else {
             resp.sendRedirect("index.jsp");
@@ -107,15 +133,22 @@ public class ControlServlet extends HttpServlet {
 
         resp.sendRedirect("index.jsp");
     }
-    private void handleDeleteAccount (HttpServletRequest req) throws IOException {
+    private void handleEditAccount(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String id = req.getParameter("id");
-
+        Account account = accountRepository.findById(id);
+        req.setAttribute("account", account);
+        req.getRequestDispatcher("edit.jsp").forward(req,resp);
+    }
+    private void handleDeleteAccount (HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+        String id = req.getParameter("id");
         if(id != null){
-            grantAccessRepository.delete(id,"user");
             accountRepository.delete(id);
         }
+        List<Account> accounts = accountRepository.getAll();
+        req.setAttribute("accounts", accounts);
+        req.getRequestDispatcher("dashboard.jsp").forward(req,resp);
     }
-    private void handleCreateAccount(HttpServletRequest req) throws IOException {
+    private void handleCreateAccount(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         String fullName = req.getParameter("fullName");
         String password = req.getParameter("password");
         String email = req.getParameter("email");
@@ -125,7 +158,11 @@ public class ControlServlet extends HttpServlet {
         GrantAccess grantAccess = new GrantAccess(account.getId(),role,true,"");
         System.out.println(account);
         System.out.println(grantAccess);
+        accountRepository.insert(account);
+        grantAccessRepository.insert(grantAccess);
 
-
+        List<Account> accounts = accountRepository.getAll();
+        req.setAttribute("accounts", accounts);
+        req.getRequestDispatcher("dashboard.jsp").forward(req,resp);
     }
 }

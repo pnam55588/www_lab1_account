@@ -91,7 +91,7 @@ public class AccountRepository {
         return false;
     }
     public boolean update(Account account){
-        String updateQuery = "UPDATE accounts SET full_name = ?, password = ?, email = ?, phone = ?, status = ? WHERE account_id = ?";
+        String updateQuery = "UPDATE account SET full_name = ?, password = ?, email = ?, phone = ?, status = ? WHERE account_id = ?";
 
         try (
                 PreparedStatement updateStatement = connection.prepareStatement(updateQuery)
@@ -112,7 +112,7 @@ public class AccountRepository {
         return false;
     }
     public boolean delete(String id) {
-        String deleteQuery = "DELETE FROM accounts WHERE account_id = ?";
+        String deleteQuery = "update  account set status = 0 WHERE account_id = ?";
 
         try (
                 PreparedStatement deleteStatement = connection.prepareStatement(deleteQuery)
